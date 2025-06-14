@@ -4,33 +4,29 @@ package views
 
 import (
 	"instafix/views/model"
-	"io"	
+	"io"
 )
 
 const (
-	embed__0  = `<!DOCTYPE html><html lang="en"><head><meta property="og:url" content="`
-	embed__1  = `"/><meta property="twitter:site" content="`
-	embed__2  = `"/><meta property="twitter:creator" content="`
-	embed__3  = `"/><meta name="theme-color" content="#CE0071"/>`
-	embed__4  = `<meta property="og:title" content="`
-	embed__5  = `"/>   <meta property="og:description" content="`
-	embed__6  = `"/>`
-	embed__7  = `<meta property="twitter:card" content="summary_large_image"/>`
-	embed__8  = `<meta http-equiv="refresh" content="`
-	embed__9  = `"/></head><body>Redirecting you to the post in a moment. <a href="`
-	embed__10 = `">Or click here.</a></body></html>`
-	embed__11 = `<meta property="twitter:title" content="`
-	embed__13 = `<meta property="og:site_name" content="InstaFix"/>   `
-	embed__14 = `<meta property="og:video" content="`
-	embed__15 = `"/><meta property="og:video:secure_url" content="`
-	embed__16 = `"/><meta property="og:video:type" content="video/mp4"/><meta property="og:video:width" content="`
-	embed__17 = `"/><meta property="og:video:height" content="`
-	embed__19 = `<meta property="twitter:card" content="`
-	embed__21 = `<meta property="twitter:player:stream" content="`
-	embed__22 = `"/><meta property="twitter:player:stream:content_type" content="video/mp4"/><meta property="twitter:player:width" content="`
-	embed__23 = `"/><meta property="twitter:player:height" content="`
-	embed__25 = `<link rel="alternate" href="`
-	embed__26 = `" type="application/json+oembed" title="`
+	embed__0  = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="theme-color" content="#CE0071"/>`
+	embed__1  = `<meta property="og:url" content="`
+	embed__2  = `"/><meta property="og:description" content="`
+	embed__3  = `"/>`
+	embed__4  = `<meta http-equiv="refresh" content="`
+	embed__5  = `"/></head><body>Redirecting you to the post in a moment. <a href="`
+	embed__6  = `">Or click here.</a></body></html>`
+	embed__7  = `<meta name="twitter:card" content="`
+	embed__9  = `<meta name="twitter:title" content="`
+	embed__11 = `<meta name="twitter:image" content="`
+	embed__13 = `<meta name="twitter:player:width" content="400"/><meta name="twitter:player:height" content="400"/><meta name="twitter:player:stream" content="`
+	embed__14 = `"/><meta name="twitter:player:stream:content_type" content="video/mp4"/>`
+	embed__15 = `<meta property="og:site_name" content="InstaFix"/>`
+	embed__16 = `<meta property="og:image" content="`
+	embed__18 = `<meta property="og:video" content="`
+	embed__19 = `"/><meta property="og:video:secure_url" content="`
+	embed__20 = `"/><meta property="og:video:type" content="video/mp4"/><meta property="og:video:width" content="400"/><meta property="og:video:height" content="400"/>`
+	embed__21 = `<link rel="alternate" href="`
+	embed__22 = `" type="application/json+oembed" title="`
 )
 
 func Embed(v *model.ViewsData, wr io.Writer) {
@@ -38,63 +34,59 @@ func Embed(v *model.ViewsData, wr io.Writer) {
 	buffer := &WriterAsBuffer{wr}
 
 	buffer.WriteString(embed__0)
-	WriteEscString(v.URL, buffer)
-	buffer.WriteString(embed__1)
-	WriteEscString(v.Title, buffer)
-	buffer.WriteString(embed__2)
-	WriteEscString(v.Title, buffer)
-	buffer.WriteString(embed__3)
 
-	if v.Title != "" {
-		buffer.WriteString(embed__11)
-		WriteEscString(v.Title, buffer)
-		buffer.WriteString(embed__6)
-	}
-	buffer.WriteString(embed__4)
-	WriteEscString(v.Title, buffer)
-	buffer.WriteString(embed__5)
-	WriteEscString("x", buffer)
-	buffer.WriteString(embed__6)
-	if v.VideoURL != "" || v.ImageURL != "" {
-		buffer.WriteString(embed__13)
-
-	}
-	buffer.WriteString(embed__7)
-	if v.VideoURL != "" {
-		buffer.WriteString(embed__14)
-		WriteEscString(v.VideoURL, buffer)
-		buffer.WriteString(embed__15)
-		WriteEscString(v.VideoURL, buffer)
-		buffer.WriteString(embed__16)
-		WriteInt(int64(v.Width), buffer)
-		buffer.WriteString(embed__17)
-		WriteInt(int64(v.Height), buffer)
-		buffer.WriteString(embed__6)
-	}
 	if v.Card != "" {
-		buffer.WriteString(embed__19)
+		buffer.WriteString(embed__7)
 		WriteEscString(v.Card, buffer)
-		buffer.WriteString(embed__6)
+		buffer.WriteString(embed__3)
+	}
+	if v.Title != "" {
+		buffer.WriteString(embed__9)
+		WriteEscString(v.Title, buffer)
+		buffer.WriteString(embed__3)
+	}
+	if v.ImageURL != "" {
+		buffer.WriteString(embed__11)
+		WriteEscString(v.ImageURL, buffer)
+		buffer.WriteString(embed__3)
 	}
 	if v.VideoURL != "" {
-		buffer.WriteString(embed__21)
+		buffer.WriteString(embed__13)
 		WriteEscString(v.VideoURL, buffer)
-		buffer.WriteString(embed__22)
-		WriteInt(int64(v.Width), buffer)
-		buffer.WriteString(embed__23)
-		WriteInt(int64(v.Height), buffer)
-		buffer.WriteString(embed__6)
+		buffer.WriteString(embed__14)
+
+	}
+	if v.VideoURL != "" || v.ImageURL != "" {
+		buffer.WriteString(embed__15)
+	}
+	buffer.WriteString(embed__1)
+	WriteEscString(v.URL, buffer)
+	buffer.WriteString(embed__2)
+	WriteEscString(v.Description, buffer)
+	buffer.WriteString(embed__3)
+	if v.ImageURL != "" {
+		buffer.WriteString(embed__16)
+		WriteEscString(v.ImageURL, buffer)
+		buffer.WriteString(embed__3)
+	}
+	if v.VideoURL != "" {
+		buffer.WriteString(embed__18)
+		WriteEscString(v.VideoURL, buffer)
+		buffer.WriteString(embed__19)
+		WriteEscString(v.VideoURL, buffer)
+		buffer.WriteString(embed__20)
+
 	}
 	if v.OEmbedURL != "" {
-		buffer.WriteString(embed__25)
+		buffer.WriteString(embed__21)
 		buffer.WriteString(v.OEmbedURL)
-		buffer.WriteString(embed__26)
+		buffer.WriteString(embed__22)
 		WriteEscString(v.Title, buffer)
-		buffer.WriteString(embed__6)
+		buffer.WriteString(embed__3)
 	}
-	buffer.WriteString(embed__8)
+	buffer.WriteString(embed__4)
 	WriteEscString(`0; url = `+v.URL+``, buffer)
-	buffer.WriteString(embed__9)
+	buffer.WriteString(embed__5)
 	WriteEscString(v.URL, buffer)
-	buffer.WriteString(embed__10)
+	buffer.WriteString(embed__6)
 }
