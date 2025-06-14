@@ -53,7 +53,7 @@ func Embed(v *model.ViewsData, wr io.Writer) {
 	buffer.WriteString(embed__4)
 	WriteEscString(v.Title, buffer)
 	buffer.WriteString(embed__5)
-	WriteEscString(v.Description, buffer)
+	WriteEscString("x", buffer)
 	buffer.WriteString(embed__6)
 	if v.VideoURL != "" || v.ImageURL != "" {
 		buffer.WriteString(embed__13)
